@@ -1,0 +1,9 @@
+{
+	"properties": [
+		{
+			"name": "positionstack.access.key",
+			"type": "java.lang.String",
+			"description": "Access Key needed to perform PositionStack request'"
+		}
+	]
+}
