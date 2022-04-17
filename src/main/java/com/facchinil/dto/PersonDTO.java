@@ -8,4 +8,5 @@ public class PersonDTO implements DataTransferObject {
 
 	private String id;
 	private String fullName;
+	private Boolean active;
 }

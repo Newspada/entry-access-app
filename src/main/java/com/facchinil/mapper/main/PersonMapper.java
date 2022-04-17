@@ -1,5 +1,6 @@
 package com.facchinil.mapper.main;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Component;
 
 import com.facchinil.dto.PersonDTO;
@@ -14,6 +15,7 @@ public class PersonMapper implements Mapper<PersonDTO, Person> {
 		PersonDTO dto = new PersonDTO();
 		dto.setId(entity.getId());
 		dto.setFullName(entity.getFullName());
+		dto.setActive(BooleanUtils.toBoolean(entity.getActive(), "Y", "N"));
 		return dto;
 	}
 
@@ -22,6 +24,7 @@ public class PersonMapper implements Mapper<PersonDTO, Person> {
 		Person entity = new Person();
 		entity.setId(dto.getId());
 		entity.setFullName(dto.getFullName());
+		entity.setActive(BooleanUtils.isTrue(dto.getActive()) ? "Y" : "N");
 		return entity;
 	}
 	

@@ -20,4 +20,7 @@ public class Person {
 	@NotNull
 	@Column(name = "FULL_NAME")
 	private String fullName;
+	
+	@Column(name = "F_ACTIVE")
+	private String active;
 }

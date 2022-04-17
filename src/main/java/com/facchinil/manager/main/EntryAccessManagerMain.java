@@ -1,10 +1,10 @@
 package com.facchinil.manager.main;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,7 @@ import com.facchinil.dto.EntryAccessDTO;
 import com.facchinil.dto.PersonDTO;
 import com.facchinil.entity.EntryAccess;
 import com.facchinil.entity.Person;
+import com.facchinil.exception.PersonNotAllowedException;
 import com.facchinil.exception.PersonNotFoundException;
 import com.facchinil.manager.EntryAccessManager;
 import com.facchinil.mapper.main.EntryAccessMapper;
@@ -39,13 +40,12 @@ public class EntryAccessManagerMain implements EntryAccessManager {
 	@Transactional
 	public EntryAccessDTO postEntryAccess(EntryAccessRequest request) {
 		PersonDTO personDTO = validatePerson(request.getId());
-		EntryAccess entity = EntryAccess.builder()
-					.modality(request.getModality())
-					.person(personMapper.toEntity(personDTO))
-					.deviceEntryDate(request.getDeviceEntryDate() == null ? null : new Timestamp(request.getDeviceEntryDate().getTime()))
-					.entryDate(new Timestamp(new Date().getTime()))
-					.build();
-		entity = entryAccessRepository.save(entity);
+		EntryAccessDTO dto = new EntryAccessDTO();
+		dto.setModality(request.getModality());
+		dto.setDeviceEntryDate(request.getDeviceEntryDate());
+		dto.setEntryDate(new Date());
+		dto.setPerson(personDTO);
+		EntryAccess entity = entryAccessRepository.save(entryAccessMapper.toEntity(dto));
 		return entryAccessMapper.toDTO(entity);
 	}
 	
@@ -53,6 +53,9 @@ public class EntryAccessManagerMain implements EntryAccessManager {
 		Person entity = personRepository.findById(id).orElse(null);
 		if(entity == null)
 			throw new PersonNotFoundException("Invalid id: " + id);
-		return personMapper.toDTO(entity);
+		PersonDTO dto = personMapper.toDTO(entity);
+		if(BooleanUtils.isNotTrue(dto.getActive()))
+			throw new PersonNotAllowedException(String.format("%s (id: %s) is not allowed to perform operations", dto.getFullName(), dto.getId()));
+		return dto;
 	}
 }
