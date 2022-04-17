@@ -1,5 +1,9 @@
 package com.facchinil.manager;
 
-public interface EntryAccessManager{
+import com.facchinil.dto.EntryAccessDTO;
+import com.facchinil.request.EntryAccessRequest;
+
+public interface EntryAccessManager {
 	
+	EntryAccessDTO postEntryAccess(EntryAccessRequest request);
 }
