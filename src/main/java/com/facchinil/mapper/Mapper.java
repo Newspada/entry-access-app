@@ -1,6 +1,7 @@
 package com.facchinil.mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -13,7 +14,7 @@ public interface Mapper<A extends DataTransferObject, B> {
 	
 	public default List<A> toDTOs(List<B> entities){
 		if(CollectionUtils.isNotEmpty(entities)) {
-			return entities.stream().map(this::toDTO).toList();
+			return entities.stream().map(this::toDTO).collect(Collectors.toList());
 		}
 		return Lists.newArrayList();
 	}
