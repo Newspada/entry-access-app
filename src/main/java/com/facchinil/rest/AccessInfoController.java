@@ -10,29 +10,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.facchinil.dto.EntryAccessDTO;
+import com.facchinil.dto.AccessInfoDTO;
 import com.facchinil.exception.BadRequestException;
-import com.facchinil.manager.EntryAccessManager;
-import com.facchinil.request.EntryAccessRequest;
+import com.facchinil.manager.AccessInfoManager;
+import com.facchinil.request.AccessInfoRequest;
 import com.facchinil.utils.DateUtils2;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
-public class EntryAccessController {
+public class AccessInfoController {
 	
 	@Autowired
-	private EntryAccessManager entryAccessManager;
+	private AccessInfoManager accessInfoManager;
 	
 	@PostMapping
-	public ResponseEntity<EntryAccessDTO> postEntryAccess(
-			@RequestBody EntryAccessRequest request){
+	public ResponseEntity<AccessInfoDTO> postAccessInfo(
+			@RequestBody AccessInfoRequest request){
 		if(request == null)
 			throw new BadRequestException("Missing request");
 		if(StringUtils.isBlank(request.getId()))
 			throw new BadRequestException("Missing id");
-		request.setDeviceEntryDate(DateUtils2.toUTC(request.getDeviceEntryDate()));
-		EntryAccessDTO entryAccess = entryAccessManager.postEntryAccess(request);
-		return new ResponseEntity<>(entryAccess, HttpStatus.CREATED);
+		request.setDeviceDate(DateUtils2.toUTC(request.getDeviceDate()));
+		AccessInfoDTO accessInfo = accessInfoManager.postAccessInfo(request);
+		return new ResponseEntity<>(accessInfo, HttpStatus.CREATED);
 	}
 }

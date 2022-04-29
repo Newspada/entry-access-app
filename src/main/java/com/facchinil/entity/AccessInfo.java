@@ -16,8 +16,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ENTRY_ACCESS")
-public class EntryAccess {
+@Table(name = "ACCESS_INFO")
+public class AccessInfo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +33,14 @@ public class EntryAccess {
 	@Column(name = "MODALITY")
 	private String modality;
 	
-	@Column(name = "DEVICE_ENTRY_DATE")
-	private Timestamp deviceEntryDate;
+	@NotNull
+	@Column(name = "WAY")
+	private String way;
+	
+	@Column(name = "DEVICE_DATE")
+	private Timestamp deviceDate;
 	
 	@NotNull
-	@Column(name = "ENTRY_DATE")
-	private Timestamp entryDate;
+	@Column(name = "APPLICATION_DATE")
+	private Timestamp appDate;
 }
