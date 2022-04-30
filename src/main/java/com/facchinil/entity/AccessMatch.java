@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -21,6 +23,11 @@ public class AccessMatch {
 	@Column(name = "ID")
 	private Long id;
 	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "PERSON_ID")
+	private Person person;
+	
 	@OneToOne
 	@JoinColumn(name = "ENTRY_ID")
 	private AccessInfo entryAccessInfo;
@@ -31,4 +38,7 @@ public class AccessMatch {
 	
 	@Column(name = "F_VALID")
 	private String valid;
+	
+	@Column(name = "ELAPSED_TIME")
+	private Long elapsedTime;
 }
