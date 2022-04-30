@@ -14,7 +14,7 @@
 	<artifactId>entry-access</artifactId>
 	<version>2.0.0-SNAPSHOT</version>
 	<name>entryAccess</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Spring Boot project to handle access entry/exits request</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
