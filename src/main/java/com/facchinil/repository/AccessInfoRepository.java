@@ -1,12 +1,12 @@
 package com.facchinil.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.facchinil.entity.AccessInfo;
-import com.google.common.base.Optional;
 
 public interface AccessInfoRepository extends JpaRepository<AccessInfo, Long> {
 

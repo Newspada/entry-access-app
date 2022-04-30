@@ -18,6 +18,8 @@ public class AccessInfoMapper implements Mapper<AccessInfoDTO, AccessInfo> {
 	
 	@Override
 	public AccessInfoDTO toDTO(AccessInfo entity) {
+		if(entity == null)
+			return null;
 		AccessInfoDTO dto = new AccessInfoDTO();
 		dto.setModality(entity.getModality());
 		dto.setWay(entity.getWay());
@@ -30,6 +32,8 @@ public class AccessInfoMapper implements Mapper<AccessInfoDTO, AccessInfo> {
 
 	@Override
 	public AccessInfo toEntity(AccessInfoDTO dto) {
+		if(dto == null)
+			return null;
 		AccessInfo entity = new AccessInfo();
 		entity.setModality(dto.getModality());
 		entity.setWay(dto.getWay());

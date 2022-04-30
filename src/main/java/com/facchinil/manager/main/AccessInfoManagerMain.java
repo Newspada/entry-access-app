@@ -57,6 +57,13 @@ public class AccessInfoManagerMain implements AccessInfoManager {
 		handleAccessMatch(request.getId());
 		return accessInfoMapper.toDTO(entity);
 	}
+	
+	@Override
+	public AccessInfoDTO getAccessInfo(AccessInfoRequest request) {
+		validatePerson(request.getId());
+		AccessInfo entity = accessInfoRepository.findTopByPersonIdOrderByIdDesc(request.getId()).orElse(null);
+		return accessInfoMapper.toDTO(entity);
+	}
 
 	private PersonDTO validatePerson(String id) {
 		Person entity = personRepository.findById(id).orElse(null);
