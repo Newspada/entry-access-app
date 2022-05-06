@@ -14,11 +14,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntryAccessRequest implements DataTransferObject {
+public class AccessInfoRequest implements DataTransferObject {
 	private static final long serialVersionUID = 885922026049859020L;
 	
 	private String modality;
+	private String way;
 	private String id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss.SSS")
-	private Date deviceEntryDate;
+	private Date deviceDate;
 }

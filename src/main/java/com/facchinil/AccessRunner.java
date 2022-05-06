@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-public class EntryAccessApplication {
+public class AccessRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EntryAccessApplication.class, args);
+		SpringApplication.run(AccessRunner.class, args);
 	}
 	
 	@PostConstruct

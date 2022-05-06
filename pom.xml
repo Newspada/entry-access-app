@@ -9,11 +9,12 @@
 		<version>2.6.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	<packaging>jar</packaging>
 	<groupId>com.facchinil</groupId>
-	<artifactId>randomPersona</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>randomPersona</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>entry-access</artifactId>
+	<version>2.0.0</version>
+	<name>entryAccess</name>
+	<description>Spring Boot project to handle access entry/exits request</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -58,15 +59,6 @@
 			<artifactId>guava</artifactId>
 			<version>31.0.1-jre</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -88,8 +80,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>16</source>
-					<target>16</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 		</plugins>
