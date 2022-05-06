@@ -54,7 +54,14 @@ public class AccessInfoManagerMain implements AccessInfoManager {
 		dto.setAppDate(new Date());
 		dto.setPerson(personDTO);
 		AccessInfo entity = accessInfoRepository.save(accessInfoMapper.toEntity(dto));
-		AccessMatch matchEntity = handleAccessMatch(request.getId());
+		handleAccessMatch(request.getId());
+		return accessInfoMapper.toDTO(entity);
+	}
+	
+	@Override
+	public AccessInfoDTO getAccessInfo(AccessInfoRequest request) {
+		validatePerson(request.getId());
+		AccessInfo entity = accessInfoRepository.findTopByPersonIdOrderByIdDesc(request.getId()).orElse(null);
 		return accessInfoMapper.toDTO(entity);
 	}
 
@@ -69,17 +76,32 @@ public class AccessInfoManagerMain implements AccessInfoManager {
 	}
 	
 	private AccessMatch handleAccessMatch(String personId) {
+		Person personEntity = personRepository.findById(personId).orElse(null);
+		if(personEntity == null)
+			return null;
+		
 		List<AccessInfo> infos = accessInfoRepository.findTop2ByPersonIdOrderByIdDesc(personId);
 		if(CollectionUtils.isEmpty(infos) || infos.size() == 1)
 			return null;
 		if("ENTRY".equalsIgnoreCase(infos.get(0).getWay()) && "EXIT".equalsIgnoreCase(infos.get(1).getWay()))
 			return null;
+		
 		AccessMatch matchEntity = new AccessMatch();
+		matchEntity.setPerson(personEntity);
 		if("EXIT".equalsIgnoreCase(infos.get(0).getWay()))
 			matchEntity.setExitAccessInfo(infos.get(0));
 		if("ENTRY".equalsIgnoreCase(infos.get(1).getWay()))
 			matchEntity.setEntryAccessInfo(infos.get(1));
-		matchEntity.setValid(matchEntity.getEntryAccessInfo() != null && matchEntity != null ? "Y" : "N");
+		matchEntity.setElapsedTime(getElapsedTime(matchEntity.getEntryAccessInfo(), matchEntity.getExitAccessInfo()));
+		matchEntity.setValid(matchEntity.getEntryAccessInfo() != null && matchEntity.getExitAccessInfo() != null && matchEntity.getElapsedTime() != null ? "Y" : "N");
 		return accessMatchRepository.save(matchEntity);
+	}
+
+	private Long getElapsedTime(AccessInfo entryAccessInfo, AccessInfo exitAccessInfo) {
+		if(entryAccessInfo == null || exitAccessInfo == null)
+			return null;
+		if(entryAccessInfo.getAppDate() == null || exitAccessInfo.getAppDate() == null)
+			return null;
+		return (exitAccessInfo.getAppDate().getTime() - entryAccessInfo.getAppDate().getTime());
 	}
 }

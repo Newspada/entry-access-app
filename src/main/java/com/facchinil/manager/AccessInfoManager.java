@@ -6,4 +6,6 @@ import com.facchinil.request.AccessInfoRequest;
 public interface AccessInfoManager {
 	
 	AccessInfoDTO postAccessInfo(AccessInfoRequest request);
+
+	AccessInfoDTO getAccessInfo(AccessInfoRequest request);
 }
